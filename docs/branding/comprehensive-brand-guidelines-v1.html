@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BatchUp — Brand &amp; Product Guidelines v2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap">
+<style>
+  :root{
+    --ink:#12132A; --ink-2:#1B1D3D; --ink-3:#262952; --ink-4:#31356B;
+    --paper:#EDEBFA; --paper-dim:#9E9CC2; --paper-faint:#6C6A94;
+    --highlighter:#DFFF4F; --highlighter-dim:#b9d63f;
+    --marker:#FF5C7D; --marker-dim:#d64a67;
+    --cobalt:#6B7CFF; --signal:#FF3B3B; --online:#3DE0A0;
+    --lightbg:#F7F6FD; --lighttext:#12132A;
+    --display:'Cabinet Grotesk','Inter',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'Space Mono',monospace;
+    --radius-lg:22px; --radius-md:14px; --radius-sm:8px; --bw:2.5px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--highlighter);color:var(--ink);}
+  a{color:inherit;}
+  img,svg{display:block;}
+
+  .shell{display:flex;min-height:100vh;}
+  .sidenav{position:fixed;top:0;left:0;bottom:0;width:262px;background:var(--ink-2);border-right:var(--bw) solid var(--ink-3);
+    padding:24px 18px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;z-index:50;}
+  .sidenav .navmark{display:flex;align-items:center;gap:9px;margin-bottom:4px;}
+  .sidenav .navmark span{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;}
+  .navgroup-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--paper-faint);
+    padding:10px 10px 2px;}
+  .navlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+  .navlist li a{display:flex;gap:9px;align-items:baseline;text-decoration:none;color:var(--paper-dim);font-size:13px;
+    padding:7px 10px;border-radius:8px;transition:background .15s,color .15s;}
+  .navlist li a .n{font-family:var(--mono);font-size:10.5px;color:var(--highlighter);opacity:.8;}
+  .navlist li a:hover{background:var(--ink-3);color:var(--paper);}
+  .navlist li a.active{background:var(--ink-3);color:var(--paper);font-weight:600;}
+  .nav-foot{margin-top:auto;font-size:10.5px;color:var(--paper-faint);font-family:var(--mono);line-height:1.6;}
+  .navtoggle{display:none;}
+
+  main{margin-left:262px;width:calc(100% - 262px);}
+  section{padding:84px 60px;border-bottom:var(--bw) solid var(--ink-3);max-width:1200px;}
+  section.wide{max-width:none;}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11.5px;color:var(--highlighter);
+    margin:0 0 14px;display:flex;gap:10px;align-items:center;}
+  .eyebrow::before{content:'';width:20px;height:2px;background:var(--highlighter);}
+  h2.st{font-family:var(--display);font-weight:800;font-size:40px;letter-spacing:-.02em;margin:0 0 16px;line-height:1.08;}
+  .lede{font-size:16.5px;color:var(--paper-dim);max-width:720px;margin:0 0 40px;}
+  h4.sub{font-family:var(--display);font-size:18px;margin:0 0 12px;}
+
+  /* Cover */
+  #top{padding:0;border-bottom:var(--bw) solid var(--ink-3);min-height:78vh;display:flex;flex-direction:column;
+    justify-content:center;position:relative;overflow:hidden;}
+  .hero-inner{padding:64px 60px;position:relative;z-index:2;}
+  .hero-tag{font-family:var(--mono);font-size:12.5px;color:var(--paper-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px;}
+  .hero-word{font-family:var(--display);font-weight:800;font-size:clamp(48px,8vw,108px);line-height:.9;letter-spacing:-.03em;
+    margin:0;display:flex;flex-wrap:wrap;align-items:flex-end;}
+  .hero-word .up{color:var(--ink);background:var(--highlighter);padding:0 14px 2px;border-radius:12px;transform:rotate(-3deg);
+    margin-left:10px;margin-bottom:6px;font-size:.6em;}
+  .hero-sub{font-size:18px;max-width:660px;color:var(--paper);margin:24px 0 0;font-weight:500;}
+  .hero-sub b{color:var(--marker);}
+  .doc-meta-row{display:flex;gap:0;margin-top:44px;border-top:var(--bw) solid var(--ink-3);flex-wrap:wrap;}
+  .doc-meta{flex:1;min-width:150px;padding:16px 24px 0 0;border-right:var(--bw) solid var(--ink-3);}
+  .doc-meta:last-child{border-right:none;}
+  .doc-meta .num{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--highlighter);}
+  .doc-meta .label{font-size:11.5px;color:var(--paper-dim);margin-top:2px;}
+  .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.32;z-index:1;}
+  .blob1{width:460px;height:460px;background:var(--marker);top:-160px;right:-100px;}
+  .blob2{width:400px;height:400px;background:var(--cobalt);bottom:-200px;left:15%;}
+
+  /* Grids */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .card{background:var(--ink-2);border:var(--bw) solid var(--ink-3);border-radius:var(--radius-md);padding:22px 20px;}
+  .card h4{font-family:var(--display);font-size:16.5px;margin:0 0 8px;}
+  .card p{font-size:13.5px;color:var(--paper-dim);margin:0;}
+  ul.clean{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;}
+  ul.clean li{padding-left:20px;position:relative;font-size:14.5px;color:var(--paper-dim);}
+  ul.clean li::before{content:'—';position:absolute;left:0;color:var(--highlighter);font-family:var(--mono);}
+  .tag-pill{font-family:var(--mono);font-size:12px;padding:6px 13px;border-radius:100px;border:var(--bw) solid var(--ink-3);color:var(--paper-dim);display:inline-block;}
+  .tag-pill.primary{background:var(--highlighter);color:var(--ink);border-color:var(--highlighter);font-weight:700;}
+  .tag-pill.marker{background:var(--marker);color:var(--ink);border-color:var(--marker);font-weight:700;}
+  .tag-pill.cobalt{background:var(--cobalt);color:#fff;border-color:var(--cobalt);font-weight:700;}
+
+  /* Swatches */
+  .swatch{border-radius:var(--radius-md);overflow:hidden;border:var(--bw) solid var(--ink-3);}
+  .swatch .fill{height:100px;display:flex;align-items:flex-end;padding:12px;font-family:var(--mono);font-weight:700;font-size:13px;}
+  .swatch .meta{background:var(--ink-2);padding:13px 15px;}
+  .swatch .meta .name{font-family:var(--display);font-weight:700;font-size:15px;}
+  .swatch .meta .hex{font-family:var(--mono);font-size:12px;color:var(--paper-dim);margin-top:2px;}
+  .swatch .meta .use{font-size:11.5px;color:var(--paper-dim);margin-top:6px;}
+
+  /* Type specimens */
+  .type-spec{border:var(--bw) solid var(--ink-3);border-radius:var(--radius-lg);margin-bottom:14px;overflow:hidden;}
+  .type-spec .head{display:flex;justify-content:space-between;align-items:baseline;padding:14px 22px;background:var(--ink-2);border-bottom:1px solid var(--ink-3);}
+  .type-spec .head .role{font-family:var(--mono);text-transform:uppercase;font-size:11px;color:var(--highlighter);letter-spacing:.06em;}
+  .type-spec .head .fam{font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);}
+  .type-spec .demo{padding:28px 22px;}
+  .type-spec.display .demo{font-family:var(--display);font-weight:800;font-size:40px;letter-spacing:-.02em;}
+  .type-spec.body .demo{font-family:var(--body);font-size:17px;max-width:680px;}
+  .type-spec.mono .demo{font-family:var(--mono);font-size:15px;color:var(--highlighter);}
+
+  table.spec-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px;}
+  table.spec-table th{text-align:left;font-family:var(--mono);text-transform:uppercase;font-size:10.5px;color:var(--paper-dim);
+    padding:10px 12px;border-bottom:var(--bw) solid var(--ink-3);}
+  table.spec-table td{padding:11px 12px;border-bottom:1px solid var(--ink-3);}
+  .swab{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:7px;vertical-align:middle;}
+  .pass{color:var(--online);font-family:var(--mono);font-size:11.5px;}
+  .warn{color:var(--marker);font-family:var(--mono);font-size:11.5px;}
+
+  /* Spacing scale */
+  .space-row{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--ink-3);}
+  .space-row .block{background:var(--highlighter);height:18px;border-radius:3px;}
+  .space-row .tok{font-family:var(--mono);font-size:12.5px;width:70px;color:var(--paper);}
+  .space-row .px{font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);width:50px;}
+
+  /* Component library */
+  .comp-block{background:var(--ink-2);border:var(--bw) solid var(--ink-3);border-radius:var(--radius-md);padding:24px;margin-bottom:14px;}
+  .comp-block .label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--paper-dim);margin-bottom:16px;}
+  .comp-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .btn{font-family:var(--body);font-weight:700;font-size:14px;padding:11px 22px;border-radius:100px;border:var(--bw) solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--highlighter);color:var(--ink);}
+  .btn-secondary{background:var(--cobalt);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--paper);border-color:var(--ink-3);}
+  .btn-danger{background:transparent;color:var(--signal);border-color:var(--signal);}
+  .btn-disabled{background:var(--ink-3);color:var(--paper-faint);cursor:not-allowed;}
+  .field-mock{background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:100px;padding:11px 18px;color:var(--paper-dim);font-size:13.5px;min-width:220px;}
+  .field-mock.focus{border-color:var(--highlighter);color:var(--paper);}
+  .field-mock.error{border-color:var(--signal);}
+  .avatar-row{display:flex;gap:14px;align-items:center;}
+  .avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;color:#fff;position:relative;}
+  .avatar .status{position:absolute;bottom:0;right:0;width:11px;height:11px;border-radius:50%;border:2px solid var(--ink-2);}
+  .chip{font-family:var(--mono);font-size:11.5px;padding:6px 12px;border-radius:100px;border:var(--bw) solid var(--ink-3);color:var(--paper-dim);}
+  .chip.owner{background:var(--marker);color:var(--ink);border-color:var(--marker);font-weight:700;}
+  .chip.admin{background:var(--cobalt);color:#fff;border-color:var(--cobalt);font-weight:700;}
+  .chip.member{color:var(--paper-dim);}
+  .chip.on{background:var(--highlighter);color:var(--ink);border-color:var(--highlighter);font-weight:700;}
+  .toast-mock{display:flex;align-items:center;gap:10px;background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:12px;padding:12px 16px;font-size:13px;max-width:340px;}
+  .toast-mock.error{border-color:var(--signal);}
+  .toast-mock.success{border-color:var(--online);}
+  .modal-mock{background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:var(--radius-lg);padding:0;max-width:380px;overflow:hidden;}
+  .modal-mock .mhead{padding:16px 20px;border-bottom:var(--bw) solid var(--ink-3);display:flex;justify-content:space-between;font-family:var(--display);font-weight:700;font-size:15.5px;}
+  .modal-mock .mbody{padding:18px 20px;display:flex;flex-direction:column;gap:12px;}
+  .modal-mock .mfoot{padding:14px 20px;border-top:var(--bw) solid var(--ink-3);display:flex;justify-content:flex-end;gap:8px;}
+  .mlabel{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;color:var(--paper-dim);letter-spacing:.05em;}
+
+  /* Desktop app frame */
+  .desktop-frame{background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:var(--radius-lg);overflow:hidden;
+    box-shadow:0 40px 90px rgba(0,0,0,.5);}
+  .app-topbar{background:var(--ink-2);border-bottom:var(--bw) solid var(--ink-3);padding:10px 16px;display:flex;align-items:center;gap:10px;}
+  .app-dots{display:flex;gap:6px;}
+  .app-dots span{width:9px;height:9px;border-radius:50%;background:var(--ink-3);}
+  .app-body{display:grid;grid-template-columns:220px 260px 1fr 220px;min-height:440px;}
+  .app-nav{background:var(--ink-2);border-right:var(--bw) solid var(--ink-3);padding:16px 12px;display:flex;flex-direction:column;gap:4px;}
+  .app-nav .search{background:var(--ink);border-radius:100px;padding:8px 14px;font-size:12px;color:var(--paper-dim);margin-bottom:12px;}
+  .app-nav .navsec{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;color:var(--paper-faint);padding:10px 8px 4px;letter-spacing:.08em;}
+  .app-nav .navitem{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:8px;font-size:12.5px;color:var(--paper-dim);}
+  .app-nav .navitem.active{background:var(--ink-3);color:var(--paper);}
+  .app-nav .navitem .badge{background:var(--marker);color:var(--ink);font-family:var(--mono);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:100px;}
+  .app-list{background:var(--ink-2);border-right:var(--bw) solid var(--ink-3);padding:14px 10px;display:flex;flex-direction:column;gap:2px;}
+  .app-list .conv{display:flex;gap:9px;padding:9px 8px;border-radius:10px;align-items:center;}
+  .app-list .conv.active{background:var(--ink-3);}
+  .app-list .conv .mini-av{width:34px;height:34px;border-radius:50%;flex:0 0 34px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:12px;color:#fff;}
+  .app-list .conv .cname{font-size:12.5px;font-weight:600;}
+  .app-list .conv .cpreview{font-size:11px;color:var(--paper-dim);}
+  .app-chat{display:flex;flex-direction:column;}
+  .app-chat .chead{padding:13px 18px;border-bottom:var(--bw) solid var(--ink-3);display:flex;justify-content:space-between;align-items:center;}
+  .app-chat .cbody{flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:11px;}
+  .app-chat .cinput{padding:12px 16px;border-top:var(--bw) solid var(--ink-3);display:flex;gap:8px;}
+  .app-panel{background:var(--ink-2);padding:16px 14px;font-size:12px;color:var(--paper-dim);}
+  .app-panel h5{font-family:var(--mono);text-transform:uppercase;font-size:10px;letter-spacing:.06em;color:var(--paper-faint);margin:0 0 10px;}
+  .app-panel .plist{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .app-panel .prow{display:flex;align-items:center;gap:8px;font-size:11.5px;}
+
+  /* Mobile frame */
+  .mobile-frame{background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:34px;max-width:300px;margin:0 auto;
+    overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45);}
+  .mobile-status{padding:10px 18px 4px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--paper-dim);}
+  .mobile-app-header{padding:10px 16px 12px;display:flex;justify-content:space-between;align-items:center;}
+  .mobile-app-header h5{font-family:var(--display);font-weight:800;font-size:19px;margin:0;}
+  .mobile-body{padding:0 12px;min-height:400px;display:flex;flex-direction:column;gap:2px;}
+  .mobile-conv{display:flex;gap:10px;padding:10px 6px;border-radius:12px;align-items:center;}
+  .mobile-conv .mini-av{width:42px;height:42px;border-radius:50%;flex:0 0 42px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:14px;color:#fff;position:relative;}
+  .mobile-conv .ctext{flex:1;min-width:0;}
+  .mobile-conv .cname{font-size:13.5px;font-weight:600;}
+  .mobile-conv .cpreview{font-size:11.5px;color:var(--paper-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mobile-conv .cmeta{text-align:right;flex:0 0 44px;}
+  .mobile-conv .ctime{font-family:var(--mono);font-size:9.5px;color:var(--paper-faint);}
+  .mobile-conv .cbadge{background:var(--marker);color:var(--ink);font-family:var(--mono);font-size:9px;font-weight:700;border-radius:100px;padding:1px 6px;display:inline-block;margin-top:3px;}
+  .mobile-tabbar{display:flex;justify-content:space-around;padding:12px 8px 18px;border-top:var(--bw) solid var(--ink-3);margin-top:auto;}
+  .mobile-tabbar .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--mono);font-size:9px;color:var(--paper-faint);}
+  .mobile-tabbar .tab.active{color:var(--highlighter);}
+  .mobile-tabbar .tab .dot-ic{width:20px;height:20px;border-radius:6px;background:var(--ink-3);}
+  .mobile-tabbar .tab.active .dot-ic{background:var(--highlighter);}
+
+  .onb-frame{background:var(--ink);border:var(--bw) solid var(--ink-3);border-radius:28px;max-width:300px;margin:0 auto;padding:32px 22px;
+    display:flex;flex-direction:column;gap:16px;box-shadow:0 30px 70px rgba(0,0,0,.45);min-height:420px;}
+
+  .step-strip{display:flex;gap:6px;margin-bottom:6px;}
+  .step-strip .dash{height:4px;flex:1;border-radius:2px;background:var(--ink-3);}
+  .step-strip .dash.done{background:var(--highlighter);}
+
+  .dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .dd-card{border-radius:var(--radius-md);padding:18px 20px;border:var(--bw) solid;}
+  .dd-card.do{border-color:var(--online);background:rgba(61,224,160,.06);}
+  .dd-card.dont2{border-color:var(--signal);background:rgba(255,59,59,.06);}
+  .dd-card .lbl{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.06em;margin-bottom:8px;display:block;}
+  .dd-card.do .lbl{color:var(--online);}
+  .dd-card.dont2 .lbl{color:var(--signal);}
+  .dd-card ul{margin:0;padding-left:16px;font-size:13px;color:var(--paper-dim);display:flex;flex-direction:column;gap:6px;}
+
+  .a11y-row{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--ink-3);}
+  .a11y-row .ok{color:var(--online);font-family:var(--mono);font-size:12px;flex:0 0 60px;}
+  .a11y-row .txt{font-size:13.5px;color:var(--paper-dim);}
+  .a11y-row .txt b{color:var(--paper);}
+
+  footer{padding:44px 60px 90px;}
+  .fmeta{font-family:var(--mono);font-size:12px;color:var(--paper-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:var(--bw) solid var(--ink-3);padding-top:22px;}
+
+  @media (max-width:1000px){
+    .sidenav{transform:translateX(-100%);transition:transform .2s ease;}
+    .sidenav.open{transform:translateX(0);}
+    main{margin-left:0;width:100%;}
+    section{padding:56px 22px;}
+    .hero-inner{padding:70px 22px 36px;}
+    .grid-2,.grid-3,.grid-4,.app-body,.dd-grid{grid-template-columns:1fr;}
+    .app-body{display:flex;flex-direction:column;}
+    .navtoggle{display:flex;position:fixed;top:14px;left:14px;z-index:60;background:var(--highlighter);color:var(--ink);
+      width:40px;height:40px;border-radius:50%;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;border:none;}
+    h2.st{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+
+<button class="navtoggle" onclick="document.querySelector('.sidenav').classList.toggle('open')">☰</button>
+
+<div class="shell">
+  <nav class="sidenav">
+    <div class="navmark">
+      <svg width="24" height="24" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="#DFFF4F"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#12132A"/><path d="M17 27L21 21H26L22 27H17Z" fill="#12132A"/></svg>
+      <span>BatchUp</span>
+    </div>
+
+    <div class="navgroup-label">Foundation</div>
+    <ul class="navlist">
+      <li><a href="#strategy"><span class="n">01</span> Positioning</a></li>
+      <li><a href="#logo"><span class="n">02</span> Logo &amp; App Icons</a></li>
+      <li><a href="#color"><span class="n">03</span> Color System</a></li>
+      <li><a href="#type"><span class="n">04</span> Typography</a></li>
+      <li><a href="#spacing"><span class="n">05</span> Spacing &amp; Grid</a></li>
+      <li><a href="#components"><span class="n">06</span> Component Library</a></li>
+    </ul>
+
+    <div class="navgroup-label">Product — Desktop</div>
+    <ul class="navlist">
+      <li><a href="#desktop"><span class="n">07</span> Desktop App Shell</a></li>
+      <li><a href="#groups"><span class="n">08</span> Create &amp; Manage Groups</a></li>
+      <li><a href="#dms"><span class="n">09</span> Direct Messages</a></li>
+    </ul>
+
+    <div class="navgroup-label">Product — Mobile</div>
+    <ul class="navlist">
+      <li><a href="#mobile"><span class="n">10</span> Mobile App</a></li>
+      <li><a href="#onboarding"><span class="n">11</span> Onboarding &amp; Profile</a></li>
+      <li><a href="#notifications"><span class="n">12</span> Notifications &amp; Toasts</a></li>
+    </ul>
+
+    <div class="navgroup-label">System</div>
+    <ul class="navlist">
+      <li><a href="#iconography"><span class="n">13</span> Iconography</a></li>
+      <li><a href="#voice"><span class="n">14</span> Voice &amp; Copy</a></li>
+      <li><a href="#a11y"><span class="n">15</span> Accessibility</a></li>
+      <li><a href="#dodont"><span class="n">16</span> Do &amp; Don't</a></li>
+    </ul>
+
+    <div class="nav-foot">batchup.fun<br>Brand &amp; Product Guidelines v2.0<br>July 2026</div>
+  </nav>
+
+  <main>
+
+    <!-- COVER -->
+    <section id="top" class="wide">
+      <div class="blob blob1"></div><div class="blob blob2"></div>
+      <div class="hero-inner">
+        <div class="hero-tag">Brand &amp; Product Guidelines · v2.0 · Enterprise Edition</div>
+        <h1 class="hero-word">batch<span class="up">up</span></h1>
+        <p class="hero-sub">Every screen, every state, every pixel — specified. <b>Built to compete with WhatsApp and Discord</b>, not to look like either of them.</p>
+        <div class="doc-meta-row">
+          <div class="doc-meta"><div class="num">16</div><div class="label">sections</div></div>
+          <div class="doc-meta"><div class="num">2</div><div class="label">platforms specced</div></div>
+          <div class="doc-meta"><div class="num">40+</div><div class="label">components &amp; states</div></div>
+          <div class="doc-meta"><div class="num">v2.0</div><div class="label">supersedes v1.0</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 STRATEGY -->
+    <section id="strategy">
+      <p class="eyebrow">Section 01</p>
+      <h2 class="st">Positioning</h2>
+      <p class="lede">"WhatsApp is where your batch ended up. BatchUp is where your batch actually lives." Students already run their social lives across a dozen WhatsApp groups and one messy Discord server — BatchUp merges WhatsApp's speed and simplicity with Discord's roles, reactions, and admin control, in one app neither techy nor non-techy users have to learn twice.</p>
+      <div class="grid-2">
+        <div>
+          <h4 class="sub">Who this has to work for</h4>
+          <ul class="clean">
+            <li><b style="color:var(--paper)">Non-techy students</b> — the person who's never touched Discord. Nothing here should require an explanation.</li>
+            <li><b style="color:var(--paper)">Techy students</b> — the person who runs a 500-member Discord server and expects roles, rate limits, and real admin control.</li>
+            <li><b style="color:var(--paper)">Everyone in between</b> — a class WhatsApp group's silent majority, who just wants messages to arrive fast and stay organized.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="sub">What "enterprise-grade" means here</h4>
+          <ul class="clean">
+            <li>Every screen in this document ships as real product UI — not a mood board. Component states (empty, loading, error, focus) are specified, not implied.</li>
+            <li>Desktop and mobile are designed as siblings, not a shrink-and-squeeze of one layout.</li>
+            <li>Accessibility, contrast, and reduced-motion are requirements, not a checklist added at the end.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 LOGO & APP ICONS -->
+    <section id="logo">
+      <p class="eyebrow">Section 02</p>
+      <h2 class="st">Logo &amp; app icons</h2>
+      <p class="lede">The mark reads three ways at once: a chat bubble, a roll-call tick, and a small "up" arrow. One geometry, reused everywhere from the wordmark to the smallest favicon.</p>
+
+      <div class="grid-4">
+        <div class="card" style="text-align:center;">
+          <div style="background:var(--ink);border-radius:14px;padding:18px;margin-bottom:12px;"><svg width="56" height="56" viewBox="0 0 40 40" fill="none" style="margin:0 auto;"><rect width="40" height="40" rx="11" fill="#DFFF4F"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#12132A"/><path d="M17 27L21 21H26L22 27H17Z" fill="#12132A"/></svg></div>
+          <h4>App icon</h4><p>iOS/Android home screen. Full-bleed lime square, no additional padding beyond the OS mask.</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="background:var(--paper);border-radius:14px;padding:18px;margin-bottom:12px;"><svg width="56" height="56" viewBox="0 0 40 40" fill="none" style="margin:0 auto;"><rect width="40" height="40" rx="11" fill="#12132A"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#DFFF4F"/><path d="M17 27L21 21H26L22 27H17Z" fill="#DFFF4F"/></svg></div>
+          <h4>Adaptive icon (light)</h4><p>Android adaptive icon foreground, inverted for light-surface launchers.</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="background:var(--ink);border-radius:14px;padding:18px;margin-bottom:12px;position:relative;">
+            <svg width="56" height="56" viewBox="0 0 40 40" fill="none" style="margin:0 auto;"><rect width="40" height="40" rx="11" fill="#DFFF4F"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#12132A"/><path d="M17 27L21 21H26L22 27H17Z" fill="#12132A"/></svg>
+            <span style="position:absolute;top:10px;right:calc(50% - 34px);background:var(--marker);color:var(--ink);font-family:var(--mono);font-size:10px;font-weight:700;border-radius:100px;padding:1px 6px;">12</span>
+          </div>
+          <h4>Notification badge</h4><p>Marker-pink count badge, top-right of icon. Caps display at "99+".</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="background:var(--ink);border-radius:14px;padding:18px;margin-bottom:12px;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" style="margin:0 auto;"><rect width="40" height="40" rx="11" fill="#DFFF4F"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#12132A"/><path d="M17 27L21 21H26L22 27H17Z" fill="#12132A"/></svg></div>
+          <h4>Favicon / 16px</h4><p>Below 20px the checkmark stroke thickens slightly so it doesn't disappear at browser-tab size.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:16px;">
+        <div class="card"><h4>Clear space</h4><p>25% of the icon's width on every side, in both the icon-only mark and the full wordmark lockup. Nothing else sits inside that margin.</p></div>
+        <div class="card"><h4>Minimum size</h4><p>Icon-only: 20px. Full wordmark lockup: never below 96px wide, or "up" stops reading as a stamp.</p></div>
+        <div class="card"><h4>Never</h4><p>Recolor the bubble, unrotate the "up" stamp, reset the wordmark in another typeface, or add a drop shadow.</p></div>
+      </div>
+    </section>
+
+    <!-- 03 COLOR -->
+    <section id="color">
+      <p class="eyebrow">Section 03</p>
+      <h2 class="st">Color system</h2>
+      <p class="lede">Dark-first — most students meet BatchUp at 11pm with brightness turned down. A light mode exists for daytime use and accessibility preference, built on the same tokens, roles inverted.</p>
+
+      <h4 class="sub">Dark mode — default</h4>
+      <div class="grid-3">
+        <div class="swatch"><div class="fill" style="background:#12132A;color:#EDEBFA;">Ink</div><div class="meta"><div class="name">Ink · #12132A</div><div class="use">Primary surface, every screen's default background.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#DFFF4F;color:#12132A;">Highlighter</div><div class="meta"><div class="name">Highlighter · #DFFF4F</div><div class="use">Primary accent — send, unread, online, active states.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#FF5C7D;color:#12132A;">Marker</div><div class="meta"><div class="name">Marker · #FF5C7D</div><div class="use">Reactions, mentions, owner role, badges.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#6B7CFF;color:#fff;">Cobalt</div><div class="meta"><div class="name">Cobalt · #6B7CFF</div><div class="use">Admin role, links, incoming bubbles, info states.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#EDEBFA;color:#12132A;">Paper</div><div class="meta"><div class="name">Paper · #EDEBFA</div><div class="use">Primary text on dark surfaces.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#FF3B3B;color:#fff;">Signal</div><div class="meta"><div class="name">Signal · #FF3B3B</div><div class="use">Destructive/error only — delete, rate-limit block, disconnect.</div></div></div>
+      </div>
+
+      <h4 class="sub" style="margin-top:36px;">Light mode — daytime / accessibility preference</h4>
+      <div class="grid-3">
+        <div class="swatch"><div class="fill" style="background:#F7F6FD;color:#12132A;">Paper BG</div><div class="meta"><div class="name">Light BG · #F7F6FD</div><div class="use">Primary surface. Cool-tinted, never warm cream.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#12132A;color:#EDEBFA;">Ink text</div><div class="meta"><div class="name">Ink text · #12132A</div><div class="use">Primary text on light surfaces.</div></div></div>
+        <div class="swatch"><div class="fill" style="background:#d64a67;color:#fff;">Marker (dim)</div><div class="meta"><div class="name">Marker Dim · #D64A67</div><div class="use">Accent darkened 14% for AA contrast on light backgrounds.</div></div></div>
+      </div>
+
+      <table class="spec-table" style="margin-top:32px;">
+        <tr><th>Pairing</th><th>Ratio</th><th>Use for</th></tr>
+        <tr><td><span class="swab" style="background:#EDEBFA"></span>Paper on Ink</td><td>14.1:1</td><td><span class="pass">Body text, always safe</span></td></tr>
+        <tr><td><span class="swab" style="background:#DFFF4F"></span>Highlighter on Ink</td><td>15.8:1</td><td><span class="pass">Buttons, large labels, badges</span></td></tr>
+        <tr><td><span class="swab" style="background:#FF5C7D"></span>Marker on Ink</td><td>5.2:1</td><td><span class="pass">Large text (18px+) and icons only</span></td></tr>
+        <tr><td><span class="swab" style="background:#6B7CFF"></span>Cobalt on Ink</td><td>3.9:1</td><td><span class="warn">UI chrome and 18px+ text only — not body copy</span></td></tr>
+        <tr><td><span class="swab" style="background:#12132A"></span>Ink on Light BG</td><td>15.1:1</td><td><span class="pass">Body text, light mode default</span></td></tr>
+      </table>
+    </section>
+
+    <!-- 04 TYPE -->
+    <section id="type">
+      <p class="eyebrow">Section 04</p>
+      <h2 class="st">Typography</h2>
+      <p class="lede">Three faces, three jobs: Display carries personality, Inter carries the actual conversation, Space Mono marks anything system-generated.</p>
+
+      <div class="type-spec display"><div class="head"><span class="role">Display · Headlines &amp; wordmark</span><span class="fam">Cabinet Grotesk · 700/800</span></div><div class="demo">Your batch, always up.</div></div>
+      <div class="type-spec body"><div class="head"><span class="role">Body · UI &amp; messages</span><span class="fam">Inter · 400/500/600</span></div><div class="demo">bro did anyone actually understand today's lecture or are we all just vibing 💀</div></div>
+      <div class="type-spec mono"><div class="head"><span class="role">Mono · Timestamps, handles, system tags</span><span class="fam">Space Mono · 400/700</span></div><div class="demo">@aditi_23 · 10:42 PM · edited</div></div>
+
+      <h4 class="sub" style="margin-top:8px;">Responsive scale</h4>
+      <table class="spec-table">
+        <tr><th>Token</th><th>Desktop</th><th>Mobile</th><th>Weight</th><th>Use</th></tr>
+        <tr><td style="font-family:var(--mono);">display/xl</td><td>48/1.05</td><td>34/1.1</td><td>800</td><td>Onboarding &amp; marketing headlines</td></tr>
+        <tr><td style="font-family:var(--mono);">display/md</td><td>28/1.1</td><td>22/1.15</td><td>700</td><td>Group name, section headers</td></tr>
+        <tr><td style="font-family:var(--mono);">body/lg</td><td>16/1.5</td><td>15/1.5</td><td>500</td><td>Message text, default</td></tr>
+        <tr><td style="font-family:var(--mono);">body/md</td><td>14/1.4</td><td>13.5/1.4</td><td>400</td><td>Secondary text, member lists</td></tr>
+        <tr><td style="font-family:var(--mono);">mono/xs</td><td>11/1.3</td><td>10.5/1.3</td><td>400</td><td>Timestamps, system messages</td></tr>
+      </table>
+
+      <h4 class="sub" style="margin-top:28px;">Font fallback stack</h4>
+      <div class="card" style="font-family:var(--mono);font-size:12.5px;line-height:2;">
+        --display: 'Cabinet Grotesk', 'Inter', -apple-system, sans-serif;<br>
+        --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;<br>
+        --mono: 'Space Mono', 'SF Mono', 'Roboto Mono', ui-monospace, monospace;
+      </div>
+    </section>
+
+    <!-- 05 SPACING -->
+    <section id="spacing">
+      <p class="eyebrow">Section 05</p>
+      <h2 class="st">Spacing &amp; grid</h2>
+      <p class="lede">An 8pt base grid, with a 4pt half-step for compact chrome like chips and badges. Corner radii scale with the size of the element they sit on.</p>
+
+      <div class="grid-2">
+        <div>
+          <h4 class="sub">Spacing tokens</h4>
+          <div class="space-row"><div class="tok">space-1</div><div class="block" style="width:4px;"></div><div class="px">4px</div></div>
+          <div class="space-row"><div class="tok">space-2</div><div class="block" style="width:8px;"></div><div class="px">8px</div></div>
+          <div class="space-row"><div class="tok">space-3</div><div class="block" style="width:16px;"></div><div class="px">16px</div></div>
+          <div class="space-row"><div class="tok">space-4</div><div class="block" style="width:24px;"></div><div class="px">24px</div></div>
+          <div class="space-row"><div class="tok">space-5</div><div class="block" style="width:32px;"></div><div class="px">32px</div></div>
+          <div class="space-row"><div class="tok">space-6</div><div class="block" style="width:48px;"></div><div class="px">48px</div></div>
+          <div class="space-row"><div class="tok">space-7</div><div class="block" style="width:64px;"></div><div class="px">64px</div></div>
+        </div>
+        <div>
+          <h4 class="sub">Radius tokens</h4>
+          <ul class="clean">
+            <li><b style="color:var(--paper)">radius-sm · 8px</b> — chips, small buttons, input fields</li>
+            <li><b style="color:var(--paper)">radius-md · 14px</b> — cards, modals, message bubbles</li>
+            <li><b style="color:var(--paper)">radius-lg · 22px</b> — app frame, hero panels, phone chrome</li>
+            <li><b style="color:var(--paper)">radius-full · 100px</b> — pills, avatars, send buttons</li>
+          </ul>
+          <h4 class="sub" style="margin-top:22px;">Breakpoints</h4>
+          <table class="spec-table">
+            <tr><th>Name</th><th>Width</th><th>Layout</th></tr>
+            <tr><td style="font-family:var(--mono);">mobile</td><td>&lt;640px</td><td>Single pane, bottom tab bar</td></tr>
+            <tr><td style="font-family:var(--mono);">tablet</td><td>640–1000px</td><td>Two pane, list + chat</td></tr>
+            <tr><td style="font-family:var(--mono);">desktop</td><td>&gt;1000px</td><td>Three/four pane with info panel</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 COMPONENTS -->
+    <section id="components">
+      <p class="eyebrow">Section 06</p>
+      <h2 class="st">Component library</h2>
+      <p class="lede">Every core control, in every state it can appear in. This is the shared vocabulary between design and engineering — nothing ships that isn't specced here.</p>
+
+      <div class="comp-block">
+        <div class="label">Buttons</div>
+        <div class="comp-row">
+          <button class="btn btn-primary">Send</button>
+          <button class="btn btn-secondary">Create group</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger">Delete message</button>
+          <button class="btn btn-disabled" disabled>Sending…</button>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="label">Text inputs</div>
+        <div class="comp-row">
+          <div class="field-mock">Message Tech Batch '27…</div>
+          <div class="field-mock focus">you@college.edu</div>
+          <div class="field-mock error">Username already taken</div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="label">Avatars &amp; presence</div>
+        <div class="avatar-row">
+          <div class="avatar" style="width:44px;height:44px;background:var(--cobalt);">A<span class="status" style="background:var(--online);"></span></div>
+          <div class="avatar" style="width:44px;height:44px;background:var(--marker);">B<span class="status" style="background:var(--paper-faint);"></span></div>
+          <div class="avatar" style="width:44px;height:44px;background:var(--highlighter);color:var(--ink);">C<span class="status" style="background:var(--online);"></span></div>
+          <span style="font-size:12.5px;color:var(--paper-dim);align-self:center;">Online = lime dot · Offline = gray dot · Initials on flat color when no Google photo.</span>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <div class="label">Role &amp; status chips</div>
+        <div class="comp-row">
+          <span class="chip owner">Owner</span>
+          <span class="chip admin">Admin</span>
+          <span class="chip member">Member</span>
+          <span class="chip on">Normal tier</span>
+          <span class="chip">Strict tier</span>
+        </div>
+      </div>
+
+      <div class="comp-row" style="align-items:flex-start;gap:20px;">
+        <div class="comp-block" style="flex:1;min-width:280px;">
+          <div class="label">Toasts</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="toast-mock success">✓ Founding badge unlocked — welcome to #4,812</div>
+            <div class="toast-mock error">⚠ Something broke on our end, not yours.<span style="margin-left:auto;color:var(--highlighter);font-family:var(--mono);font-size:11px;">Retry</span></div>
+            <div class="toast-mock">↺ Lost you for a second. Reconnecting…</div>
+          </div>
+        </div>
+        <div class="comp-block" style="flex:1;min-width:280px;">
+          <div class="label">Modal — confirm delete</div>
+          <div class="modal-mock">
+            <div class="mhead">Delete message? <span style="color:var(--paper-faint);">✕</span></div>
+            <div class="mbody">
+              <p style="font-size:13px;color:var(--paper-dim);margin:0;">This can't be undone. Everyone in the chat will see "[Message deleted]".</p>
+            </div>
+            <div class="mfoot">
+              <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px;">Cancel</button>
+              <button class="btn btn-danger" style="padding:8px 16px;font-size:13px;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 DESKTOP APP SHELL -->
+    <section id="desktop" class="wide" style="max-width:1200px;">
+      <p class="eyebrow">Section 07</p>
+      <h2 class="st">Desktop app shell</h2>
+      <p class="lede">Four-pane layout on wide viewports: primary nav, conversation list, active chat, contextual info panel. The info panel collapses first as width shrinks; primary nav collapses to icons only below 1200px.</p>
+
+      <div class="desktop-frame">
+        <div class="app-topbar"><div class="app-dots"><span></span><span></span><span></span></div>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-left:8px;">batchup.fun</span></div>
+        <div class="app-body">
+          <div class="app-nav">
+            <div class="search">🔍 Search</div>
+            <div class="navsec">Pinned</div>
+            <div class="navitem active">🎓 Tech Batch '27</div>
+            <div class="navsec">Groups</div>
+            <div class="navitem">🎨 Design Batch <span class="badge">3</span></div>
+            <div class="navitem">📈 Marketing</div>
+            <div class="navsec">Direct messages</div>
+            <div class="navitem">Alice</div>
+            <div class="navitem">Bob <span class="badge">1</span></div>
+          </div>
+          <div class="app-list">
+            <div class="conv active"><div class="mini-av" style="background:var(--cobalt);">T</div><div><div class="cname">Tech Batch '27</div><div class="cpreview">Charlie: found a bug in…</div></div></div>
+            <div class="conv"><div class="mini-av" style="background:var(--marker);">D</div><div><div class="cname">Design Batch</div><div class="cpreview">Priya: notes uploaded ✅</div></div></div>
+            <div class="conv"><div class="mini-av" style="background:var(--highlighter);color:var(--ink);">A</div><div><div class="cname">Alice</div><div class="cpreview">omw, 5 mins</div></div></div>
+          </div>
+          <div class="app-chat">
+            <div class="chead"><div><b style="font-family:var(--display);font-size:15px;">Tech Batch '27</b><div style="font-family:var(--mono);font-size:10.5px;color:var(--online);">● 43 online · 128 members</div></div><span style="color:var(--paper-dim);">⋮</span></div>
+            <div class="cbody">
+              <div style="align-self:flex-start;max-width:70%;"><div style="font-family:var(--mono);font-size:10.5px;color:var(--cobalt);margin-bottom:3px;">@alice</div><div style="background:var(--ink-3);border:var(--bw) solid var(--ink);border-radius:14px 14px 14px 4px;padding:9px 13px;font-size:13.5px;">anyone have notes from today's DBMS class?</div></div>
+              <div style="align-self:flex-start;max-width:70%;"><div style="font-family:var(--mono);font-size:10.5px;color:var(--cobalt);margin-bottom:3px;">@bob</div><div style="background:var(--ink-3);border:var(--bw) solid var(--ink);border-radius:14px 14px 14px 4px;padding:9px 13px;font-size:13.5px;">yep sending in a sec 🔥</div></div>
+              <div style="align-self:flex-end;max-width:70%;"><div style="font-family:var(--mono);font-size:10.5px;color:var(--marker);margin-bottom:3px;text-align:right;">you</div><div style="background:var(--cobalt);color:#fff;border-radius:14px 14px 4px 14px;padding:9px 13px;font-size:13.5px;">bless you bob 🙏</div></div>
+            </div>
+            <div class="cinput"><div class="field-mock" style="flex:1;">Message Tech Batch '27…</div><button class="btn btn-primary" style="padding:9px 16px;font-size:12.5px;">Send</button></div>
+          </div>
+          <div class="app-panel">
+            <h5>Group info</h5>
+            <p style="font-size:12px;">128 members · created Jan 2026</p>
+            <h5 style="margin-top:16px;">Online — 43</h5>
+            <div class="plist">
+              <div class="prow"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:var(--cobalt);">A</div>Alice <span class="chip owner" style="margin-left:auto;padding:2px 8px;font-size:9.5px;">Owner</span></div>
+              <div class="prow"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:var(--marker);">B</div>Bob <span class="chip admin" style="margin-left:auto;padding:2px 8px;font-size:9.5px;">Admin</span></div>
+              <div class="prow"><div class="avatar" style="width:22px;height:22px;font-size:9px;background:var(--highlighter);color:var(--ink);">C</div>Charlie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--paper-dim);margin-top:16px;">Below 1200px: info panel hides behind the ⋮ menu. Below 900px: primary nav collapses to a 64px icon rail. Below 640px: the shell switches entirely to the mobile pattern in Section 10.</p>
+    </section>
+
+    <!-- 08 GROUPS -->
+    <section id="groups">
+      <p class="eyebrow">Section 08</p>
+      <h2 class="st">Create &amp; manage groups</h2>
+      <p class="lede">Group creation is a single modal, not a multi-page wizard — name, optional description, add members, done. Rate limits and roles live in a separate settings surface only admins see.</p>
+
+      <div class="grid-2">
+        <div class="modal-mock" style="max-width:100%;">
+          <div class="mhead">Create new group <span style="color:var(--paper-faint);">✕</span></div>
+          <div class="mbody">
+            <div><div class="mlabel">Group name</div><div class="field-mock" style="width:100%;margin-top:6px;">Tech Batch '27</div></div>
+            <div><div class="mlabel">Description (optional)</div><div class="field-mock" style="width:100%;margin-top:6px;color:var(--paper-faint);">What's this batch about?</div></div>
+            <div><div class="mlabel">Add members</div><div class="field-mock" style="width:100%;margin-top:6px;">Search username…</div>
+              <div class="comp-row" style="margin-top:8px;"><span class="chip">Alice ✕</span><span class="chip">Bob ✕</span><span class="chip">+2 more</span></div>
+            </div>
+          </div>
+          <div class="mfoot"><button class="btn btn-ghost" style="padding:8px 16px;font-size:13px;">Cancel</button><button class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Create group</button></div>
+        </div>
+
+        <div class="modal-mock" style="max-width:100%;">
+          <div class="mhead">Rate limit settings <span style="color:var(--paper-faint);">✕</span></div>
+          <div class="mbody">
+            <p style="font-size:12.5px;color:var(--paper-dim);margin:0;">Applies to members. Admins and owner always bypass.</p>
+            <div class="comp-row">
+              <span class="chip">Relaxed</span><span class="chip on">Normal</span><span class="chip">Moderate</span><span class="chip">Strict</span><span class="chip">Custom</span>
+            </div>
+            <div style="font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);">Normal — 40 msgs/min · 5 msgs/sec</div>
+          </div>
+          <div class="mfoot"><button class="btn btn-ghost" style="padding:8px 16px;font-size:13px;">Cancel</button><button class="btn btn-secondary" style="padding:8px 16px;font-size:13px;">Save</button></div>
+        </div>
+      </div>
+
+      <h4 class="sub" style="margin-top:36px;">Roles &amp; permissions</h4>
+      <table class="spec-table">
+        <tr><th>Action</th><th>Owner</th><th>Admin</th><th>Member</th></tr>
+        <tr><td>Send messages</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        <tr><td>Invite / remove members</td><td>✓</td><td>✓</td><td>—</td></tr>
+        <tr><td>Edit group name/description</td><td>✓</td><td>✓</td><td>—</td></tr>
+        <tr><td>Delete any message</td><td>✓</td><td>✓</td><td>Own only</td></tr>
+        <tr><td>Configure rate limits</td><td>✓</td><td>✓</td><td>—</td></tr>
+        <tr><td>Delete the group</td><td>✓</td><td>—</td><td>—</td></tr>
+        <tr><td>Bypass rate limits</td><td>✓</td><td>✓</td><td>—</td></tr>
+      </table>
+    </section>
+
+    <!-- 09 DMS -->
+    <section id="dms">
+      <p class="eyebrow">Section 09</p>
+      <h2 class="st">Direct messages</h2>
+      <p class="lede">Starting a DM never requires more than a username. No friend requests, no follow-back — anyone can message anyone, matching how a batch actually behaves.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>Start a DM — two paths</h4>
+          <ul class="clean">
+            <li>Search by username in the sidebar search bar → tap "Chat"</li>
+            <li>Tap any username inside a group chat → jumps straight to (or creates) the DM</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Conversation list rules</h4>
+          <ul class="clean">
+            <li>Sorted by most recent message, always — no manual reordering</li>
+            <li>Unread badge shows exact count up to 99, then "99+"</li>
+            <li>Typing state replaces the preview line only while active</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4 class="sub" style="margin-top:28px;">User search — empty vs. results</h4>
+      <div class="grid-2">
+        <div class="card">
+          <div class="field-mock" style="width:100%;margin-bottom:14px;">🔍 aditi</div>
+          <div class="comp-row" style="flex-direction:column;align-items:stretch;gap:8px;">
+            <div style="display:flex;gap:10px;align-items:center;"><div class="avatar" style="width:34px;height:34px;font-size:12px;background:var(--cobalt);">A</div><span style="font-size:13.5px;">@aditi_23</span><button class="btn btn-ghost" style="margin-left:auto;padding:5px 12px;font-size:11.5px;">Chat</button></div>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;padding:36px 20px;">
+          <div style="font-size:26px;">🔍</div>
+          <h4 style="margin-top:10px;">Nobody's using that name.</h4>
+          <p>Try again?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 MOBILE -->
+    <section id="mobile" class="wide" style="max-width:1200px;">
+      <p class="eyebrow">Section 10</p>
+      <h2 class="st">Mobile app</h2>
+      <p class="lede">Mobile is not desktop shrunk down — it's single-pane by default, with a persistent bottom tab bar and swipe gestures replacing hover states that don't exist on touch.</p>
+
+      <div class="grid-3">
+        <div>
+          <div class="mobile-frame">
+            <div class="mobile-status"><span>9:41</span><span>●●● 100%</span></div>
+            <div class="mobile-app-header"><h5>Chats</h5><span style="color:var(--paper-dim);">🔍</span></div>
+            <div class="mobile-body">
+              <div class="mobile-conv"><div class="mini-av" style="background:var(--cobalt);">T</div><div class="ctext"><div class="cname">Tech Batch '27</div><div class="cpreview">Charlie: found a bug…</div></div><div class="cmeta"><div class="ctime">10:35 AM</div><span class="cbadge">4</span></div></div>
+              <div class="mobile-conv"><div class="mini-av" style="background:var(--marker);">D</div><div class="ctext"><div class="cname">Design Batch</div><div class="cpreview">Priya: notes up ✅</div></div><div class="cmeta"><div class="ctime">9:12 AM</div></div></div>
+              <div class="mobile-conv"><div class="mini-av" style="background:var(--highlighter);color:var(--ink);">A</div><div class="ctext"><div class="cname">Alice</div><div class="cpreview">omw, 5 mins</div></div><div class="cmeta"><div class="ctime">Yest</div></div></div>
+            </div>
+            <div class="mobile-tabbar">
+              <div class="tab active"><div class="dot-ic"></div>Chats</div>
+              <div class="tab"><div class="dot-ic"></div>Groups</div>
+              <div class="tab"><div class="dot-ic"></div>Profile</div>
+            </div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">Conversation list — 3-tab bar</p>
+        </div>
+
+        <div>
+          <div class="mobile-frame">
+            <div class="mobile-status"><span>9:41</span><span>●●● 100%</span></div>
+            <div class="mobile-app-header" style="border-bottom:var(--bw) solid var(--ink-3);"><span style="color:var(--paper-dim);">←</span><h5 style="font-size:15px;">Tech Batch '27</h5><span style="color:var(--paper-dim);">⋮</span></div>
+            <div style="padding:12px 10px;display:flex;flex-direction:column;gap:9px;min-height:320px;">
+              <div style="align-self:flex-start;max-width:78%;"><div style="font-family:var(--mono);font-size:10px;color:var(--cobalt);margin-bottom:2px;">@alice</div><div style="background:var(--ink-3);border-radius:13px 13px 13px 4px;padding:8px 12px;font-size:13px;">anyone have DBMS notes?</div></div>
+              <div style="align-self:flex-end;max-width:78%;"><div style="background:var(--cobalt);color:#fff;border-radius:13px 13px 4px 13px;padding:8px 12px;font-size:13px;">sending now 🔥</div></div>
+              <div style="font-family:var(--mono);font-size:10px;color:var(--paper-dim);padding:0 4px;">Charlie is typing <span style="color:var(--highlighter);">●●●</span></div>
+            </div>
+            <div style="display:flex;gap:8px;padding:10px 12px;border-top:var(--bw) solid var(--ink-3);"><div class="field-mock" style="flex:1;font-size:12.5px;">Message…</div></div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">Chat screen — no tab bar, full focus</p>
+        </div>
+
+        <div>
+          <div class="mobile-frame">
+            <div class="mobile-status"><span>9:41</span><span>●●● 100%</span></div>
+            <div style="padding:24px 16px;text-align:center;">
+              <div class="avatar" style="width:76px;height:76px;font-size:26px;background:var(--marker);margin:0 auto 12px;">P</div>
+              <h5 style="font-family:var(--display);font-size:18px;margin:0;">Priya Sharma</h5>
+              <div style="font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);margin-top:2px;">@priya_23</div>
+              <span class="tag-pill primary" style="margin-top:10px;display:inline-block;">🎓 Founding Batch #0142</span>
+              <div style="text-align:left;margin-top:24px;display:flex;flex-direction:column;gap:2px;">
+                <div class="navitem" style="justify-content:flex-start;gap:10px;">✏️ Edit name</div>
+                <div class="navitem" style="justify-content:flex-start;gap:10px;">🔔 Notifications</div>
+                <div class="navitem" style="justify-content:flex-start;gap:10px;">🎨 Appearance</div>
+                <div class="navitem" style="justify-content:flex-start;gap:10px;color:var(--signal);">🚪 Log out</div>
+              </div>
+            </div>
+            <div class="mobile-tabbar">
+              <div class="tab"><div class="dot-ic"></div>Chats</div>
+              <div class="tab"><div class="dot-ic"></div>Groups</div>
+              <div class="tab active"><div class="dot-ic"></div>Profile</div>
+            </div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">Profile &amp; settings tab</p>
+        </div>
+      </div>
+
+      <h4 class="sub" style="margin-top:36px;">Touch &amp; gesture rules</h4>
+      <div class="grid-3">
+        <div class="card"><h4>Swipe to reply</h4><p>Swipe right on any bubble to attach a reply — mirrors WhatsApp's muscle memory on purpose, since it's the one gesture nobody has to learn.</p></div>
+        <div class="card"><h4>Long-press for actions</h4><p>Long-press opens the react/reply/edit/delete sheet, replacing desktop's right-click context menu.</p></div>
+        <div class="card"><h4>44px minimum touch target</h4><p>Every tappable element — tab icons, chips, message actions — meets a 44×44px minimum hit area, even where the visible icon is smaller.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ONBOARDING -->
+    <section id="onboarding" class="wide" style="max-width:1200px;">
+      <p class="eyebrow">Section 11</p>
+      <h2 class="st">Onboarding &amp; profile creation</h2>
+      <p class="lede">Three screens between "never heard of BatchUp" and "in a group chat." No email/password form — Google OAuth generates the account, the person only ever confirms or edits.</p>
+
+      <div class="grid-3">
+        <div>
+          <div class="onb-frame">
+            <div class="step-strip"><div class="dash done"></div><div class="dash"></div><div class="dash"></div></div>
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="#DFFF4F"/><path d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z" fill="#12132A"/><path d="M17 27L21 21H26L22 27H17Z" fill="#12132A"/></svg>
+              <h4 style="font-family:var(--display);font-size:19px;margin:0;">Your batch's chat is one link away.</h4>
+              <button class="btn btn-primary" style="width:100%;">Continue with Google</button>
+              <p style="font-size:10.5px;color:var(--paper-faint);">No password. No spam. One tap.</p>
+            </div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">1 · Google sign-in</p>
+        </div>
+
+        <div>
+          <div class="onb-frame">
+            <div class="step-strip"><div class="dash done"></div><div class="dash done"></div><div class="dash"></div></div>
+            <div class="mlabel">Your username</div>
+            <div class="field-mock" style="width:100%;">aditi_23</div>
+            <p style="font-size:11.5px;color:var(--paper-dim);margin:0;">Auto-generated from your email. Change it now — this is what your batch will @mention.</p>
+            <div style="margin-top:auto;"><button class="btn btn-primary" style="width:100%;">Looks good</button></div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">2 · Confirm username</p>
+        </div>
+
+        <div>
+          <div class="onb-frame">
+            <div class="step-strip"><div class="dash done"></div><div class="dash done"></div><div class="dash done"></div></div>
+            <div style="text-align:center;"><div class="avatar" style="width:64px;height:64px;font-size:22px;background:var(--cobalt);margin:0 auto 10px;">A</div>
+            <h4 style="font-family:var(--display);font-size:17px;margin:0;">Nothing here yet.<br>Your batch is waiting.</h4></div>
+            <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;"><button class="btn btn-primary" style="width:100%;">Create a group</button><button class="btn btn-ghost" style="width:100%;">Start a chat</button></div>
+          </div>
+          <p style="text-align:center;font-size:12px;color:var(--paper-dim);margin-top:10px;">3 · Empty state → first action</p>
+        </div>
+      </div>
+
+      <h4 class="sub" style="margin-top:32px;">Username rules</h4>
+      <table class="spec-table">
+        <tr><th>Rule</th><th>Detail</th></tr>
+        <tr><td>Generation</td><td>Lowercased email prefix, sanitized to a–z, 0–9, dot, underscore, then a random 4-character suffix for uniqueness</td></tr>
+        <tr><td>Editable</td><td>Once, during onboarding; afterward via Profile settings, subject to a 14-day cooldown between changes</td></tr>
+        <tr><td>Uniqueness</td><td>Checked live as the person types — inline "✓ available" / "✕ taken" under the field, no submit-then-fail round trip</td></tr>
+        <tr><td>Character limit</td><td>3–20 characters</td></tr>
+      </table>
+    </section>
+
+    <!-- 12 NOTIFICATIONS -->
+    <section id="notifications">
+      <p class="eyebrow">Section 12</p>
+      <h2 class="st">Notifications &amp; system toasts</h2>
+      <p class="lede">Phase-1 ships in-app toasts only (no push yet — see roadmap). Every toast follows one shape: what happened, in the app's voice, with a next step if one exists.</p>
+      <table class="spec-table">
+        <tr><th>Moment</th><th>Toast copy</th><th>Action</th></tr>
+        <tr><td>Message failed to send</td><td>Failed to send message</td><td>Retry</td></tr>
+        <tr><td>Rate limited</td><td>Whoa, slow down — you can send again in {n}s</td><td>—</td></tr>
+        <tr><td>Connection lost</td><td>Lost you for a second. Reconnecting…</td><td>—</td></tr>
+        <tr><td>Added to a group</td><td>Priya added you to Tech Batch '27</td><td>Open</td></tr>
+        <tr><td>Removed / permission denied</td><td>Not your call — that's an admin thing</td><td>—</td></tr>
+        <tr><td>Generic error</td><td>Something broke on our end, not yours</td><td>Retry</td></tr>
+      </table>
+    </section>
+
+    <!-- 13 ICONOGRAPHY -->
+    <section id="iconography">
+      <p class="eyebrow">Section 13</p>
+      <h2 class="st">Iconography</h2>
+      <p class="lede">2px rounded stroke, consistent corner radius, filled only for an active/selected state. Motifs pull from the classroom and hostel-room vernacular — notebooks, highlighter strokes, attendance ticks, timetable grids — never generic tech clip-art.</p>
+      <div class="grid-4">
+        <div class="card" style="display:flex;align-items:center;justify-content:center;height:70px;"><svg viewBox="0 0 24 24" fill="none" stroke="#DFFF4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="30" height="30"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div class="card" style="display:flex;align-items:center;justify-content:center;height:70px;"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5C7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="30" height="30"><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <div class="card" style="display:flex;align-items:center;justify-content:center;height:70px;"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="30" height="30"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="card" style="display:flex;align-items:center;justify-content:center;height:70px;"><svg viewBox="0 0 24 24" fill="none" stroke="#EDEBFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="30" height="30"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 12 0v2"/><circle cx="19" cy="9" r="2"/></svg></div>
+      </div>
+    </section>
+
+    <!-- 14 VOICE -->
+    <section id="voice">
+      <p class="eyebrow">Section 14</p>
+      <h2 class="st">Voice &amp; copy system</h2>
+      <p class="lede">BatchUp talks like the funniest, most reliable person in the group chat — never a support ticket. Short sentences, real verbs, zero corporate padding.</p>
+      <div class="grid-2">
+        <ul class="clean">
+          <li>Write like a person texting, not a system logging an event.</li>
+          <li>Errors explain what happened and what to do next — never "oops!" with no next step.</li>
+          <li>Never blame the user for a system failure; gently call out their own rate limit only.</li>
+        </ul>
+        <ul class="clean">
+          <li>One exclamation mark at most per string, and only when earned.</li>
+          <li>Buttons say the action, in the same words the confirmation echoes back.</li>
+          <li>BatchUp's voice appears only in system copy — never inside anyone's DMs or group messages.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 15 A11Y -->
+    <section id="a11y">
+      <p class="eyebrow">Section 15</p>
+      <h2 class="st">Accessibility</h2>
+      <p class="lede">Non-negotiable floor for every screen in this document — not an audit pass added at the end.</p>
+      <div class="a11y-row"><div class="ok">AA+</div><div class="txt"><b>Contrast</b> — every text/background pairing in Section 03 meets WCAG AA at minimum; Paper-on-Ink and Highlighter-on-Ink exceed AAA.</div></div>
+      <div class="a11y-row"><div class="ok">44px</div><div class="txt"><b>Touch targets</b> — every tappable control on mobile meets a 44×44px minimum hit area, regardless of visible icon size.</div></div>
+      <div class="a11y-row"><div class="ok">Focus</div><div class="txt"><b>Keyboard focus</b> — every interactive element on desktop shows a visible 2px Highlighter focus ring; nothing relies on hover alone.</div></div>
+      <div class="a11y-row"><div class="ok">Motion</div><div class="txt"><b>Reduced motion</b> — `prefers-reduced-motion` swaps all slide/scale transitions for instant state changes; typing dots and loading spinners still animate minimally, never a jarring cut.</div></div>
+      <div class="a11y-row"><div class="ok">Labels</div><div class="txt"><b>Screen readers</b> — icon-only buttons (send, react, more) always carry an `aria-label` matching their visible tooltip text, not a generic "button."</div></div>
+    </section>
+
+    <!-- 16 DO/DONT -->
+    <section id="dodont">
+      <p class="eyebrow">Section 16</p>
+      <h2 class="st">Do &amp; don't</h2>
+      <div class="dd-grid">
+        <div class="dd-card do">
+          <span class="lbl">Do</span>
+          <ul>
+            <li>Design mobile and desktop as siblings from the same components, not one squeezed into the other.</li>
+            <li>Use exactly one loud accent per screen as the hero color.</li>
+            <li>Keep every error, empty, and loading state specified before a screen ships.</li>
+            <li>Let usernames and timestamps render in mono for the "stamped" feel.</li>
+          </ul>
+        </div>
+        <div class="dd-card dont2">
+          <span class="lbl">Don't</span>
+          <ul>
+            <li>Don't ship a mobile screen that's just the desktop layout at 375px wide.</li>
+            <li>Don't reach for a blue-to-purple gradient hero — that's every other chat app's default.</li>
+            <li>Don't write error copy that apologizes without saying what to do next.</li>
+            <li>Don't treat accessibility as a post-launch pass.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="fmeta">
+        <span>BatchUp Brand &amp; Product Guidelines · v2.0</span>
+        <span>batchup.fun</span>
+        <span>Supersedes v1.0 · July 2026</span>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.navlist a');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  window.addEventListener('scroll', () => {
+    let idx = 0;
+    sections.forEach((s,i)=>{ if(s && window.scrollY >= s.offsetTop - 200) idx = i; });
+    links.forEach(l=>l.classList.remove('active'));
+    if(links[idx]) links[idx].classList.add('active');
+  });
+  links.forEach(l=>l.addEventListener('click', ()=>{
+    if(window.innerWidth <= 1000) document.querySelector('.sidenav').classList.remove('open');
+  }));
+</script>
+</body>
+</html>

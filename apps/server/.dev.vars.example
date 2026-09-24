@@ -1,0 +1,8 @@
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+ALLOWED_ORIGINS=http://localhost:3000
+WEB_APP_URL=http://localhost:3000
+SESSION_SECRET=your-session-secret-min-32-chars
+RAZORPAY_KEY_ID=rzp_test_your-key-id
+RAZORPAY_KEY_SECRET=your-razorpay-key-secret
+RAZORPAY_WEBHOOK_SECRET=your-razorpay-webhook-secret

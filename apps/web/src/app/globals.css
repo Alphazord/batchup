@@ -1,0 +1,658 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — dark mode (default) */
+  --color-ink: #12132A;
+  --color-ink-2: #1B1D3D;
+  --color-ink-3: #262952;
+  --color-ink-4: #31356B;
+  --color-paper: #EDEBFA;
+  --color-paper-dim: #C9C7DE;
+  --color-paper-faint: #6C6A94;
+  --color-highlighter: #DFFF4F;
+  --color-highlighter-dim: #b9d63f;
+  --color-marker: #FF5C7D;
+  --color-marker-dim: #d64a67;
+  --color-cobalt: #6B7CFF;
+  --color-cobalt-hover: #5a6ae0;
+  --color-signal: #FF3B3B;
+  --color-online: #3DE0A0;
+  --color-lightbg: #F7F6FD;
+
+  /* Typography */
+  --font-display: "Cabinet Grotesk", "Poppins", -apple-system, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Space Mono", "SF Mono", "Roboto Mono", ui-monospace, monospace;
+
+  /* Radius scale (brand spec) */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+
+  /* Breakpoints (brand spec) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 1000px;
+  --breakpoint-lg: 1200px;
+}
+
+/* ── Legacy CSS custom properties + motion tokens ──────────────────── */
+:root {
+  /* Color palette */
+  --ink: #12132A;
+  --ink-2: #1B1D3D;
+  --ink-3: #262952;
+  --ink-4: #31356B;
+  --paper: #EDEBFA;
+  --paper-dim: #C9C7DE;
+  --paper-faint: #6C6A94;
+  --highlighter: #DFFF4F;
+  --highlighter-dim: #b9d63f;
+  --marker: #FF5C7D;
+  --cobalt: #6B7CFF;
+  --signal: #FF3B3B;
+  --online: #3DE0A0;
+
+  /* Semantic aliases used by custom CSS classes */
+  --bg-2: #1B1D3D;
+  --bg-4: #31356B;
+  --clr-dim: #262952;
+
+  /* Typography */
+  --display: "Cabinet Grotesk", "Poppins", -apple-system, sans-serif;
+  --body: "Inter", sans-serif;
+  --mono: "Space Mono", monospace;
+
+  /* Motion */
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-typing-loop: 1200ms;
+}
+
+/* Reduced-motion users get instant state changes */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+}
+
+/* ── Light mode (secondary theme) ─────────────────────────────────── */
+.theme-light {
+  --ink: var(--paper);
+  --ink-2: #FFFFFF;
+  --ink-3: #DAD8EC;
+  --paper: #12132A;
+  --paper-dim: #55547A;
+  --paper-faint: #8886A8;
+  color-scheme: light;
+}
+
+/* Prevent white flash during page load */
+body {
+  background-color: var(--ink);
+}
+
+/* Selection color per brand spec */
+::selection {
+  background: var(--highlighter);
+  color: var(--ink);
+}
+
+/* Dialog backdrop (native <dialog> elements) */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Global focus-visible ring for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--highlighter);
+  outline-offset: 2px;
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes highlight-fade {
+  0% { background-color: color-mix(in srgb, var(--cobalt) 10%, transparent); }
+  100% { background-color: transparent; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+  }
+  .animate-scale-in {
+    animation: scale-in 0.15s ease-out;
+  }
+  .animate-slide-in-right {
+    animation: slide-in-right 0.2s ease-out;
+  }
+  .animate-highlight-fade {
+    animation: highlight-fade 2s ease-out forwards;
+  }
+  .animate-slide-up {
+    animation: slide-up 0.2s ease-out;
+  }
+  .animate-slide-down {
+    animation: slide-down 0.2s ease-out;
+  }
+  .typing-dot {
+    animation: typing-bounce 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-4);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cobalt);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-4) transparent;
+}
+
+/* Message hover transition */
+.message-row {
+  transition: background-color 0.08s ease;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--ink-3) 25%, var(--ink-2) 50%, var(--ink-3) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-sm);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  }
+}
+
+/* Touch utilities */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.safe-area-inset {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Prevent iOS long-press callout on touch devices while allowing desktop text selection */
+@media (hover: none) and (pointer: coarse) {
+  .no-touch-callout {
+    -webkit-touch-callout: none;
+  }
+}
+
+/* Touch interaction feedback (touch devices only) */
+@media (hover: none) and (pointer: coarse) {
+  .touch-active:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* Mobile faster animations */
+@media (max-width: 640px) {
+  .animate-fade-in {
+    animation: fade-in 0.1s ease-out;
+  }
+  .animate-slide-in-right {
+    animation: slide-in-right 0.15s ease-out;
+  }
+}
+
+/* ── Mobile bottom-sheet dialog override ────────────────────────────── */
+/* <dialog> top-layer UA styles override Tailwind's bottom-0. Force bottom on mobile. */
+@media (max-width: 767px) {
+  dialog[open] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85dvh !important;
+    border-radius: 22px 22px 0 0 !important;
+    transform: none !important;
+    animation: slide-up 0.2s ease-out !important;
+    overflow-y: auto;
+  }
+  dialog[open]::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ── Suppress focus-visible outline inside chat input area ──────────── */
+/* The global focus-visible ring conflicts with the container border transition */
+.chat-input-area textarea:focus-visible,
+.chat-input-area input:focus-visible {
+  outline: none;
+}
+
+/* ── Scroll-triggered reveal ────────────────────────────────────────── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-snap), transform 0.6s var(--ease-snap);
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Floating animation for decorative elements ─────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ── Hover actions flyout entrance ──────────────────────────────────── */
+@keyframes hover-actions-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hover-actions-enter {
+  animation: hover-actions-in 0.14s var(--ease-snap) forwards;
+}
+
+/* ── Hover actions (message action bar) ────────────────────────────── */
+.hover-actions {
+  position: absolute;
+  top: -12px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg-2);
+  border: 2.5px solid var(--clr-dim);
+  border-radius: 999px;
+  padding: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 35;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.msg:hover .hover-actions,
+.msg:focus-within .hover-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hover-actions-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* ── Reaction chips ────────────────────────────────────────────────── */
+.reaction-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 14px;
+  border-radius: 999px;
+  background: var(--bg-4);
+  border: 2.5px solid var(--clr-dim);
+  color: var(--paper-dim);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.reaction-chip:hover {
+  border-color: var(--paper-dim);
+}
+.reaction-chip-active {
+  background: var(--highlighter);
+  border-color: var(--highlighter);
+  color: var(--ink);
+}
+.reaction-chip-active:hover {
+  background: var(--highlighter-dim);
+  border-color: var(--highlighter-dim);
+}
+
+/* ── Reply quote bar (inside bubble) ────────────────────────────────── */
+.reply-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border-left: 3px solid var(--highlighter);
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 12px;
+}
+.reply-quote-mine {
+  border-left-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.14);
+}
+.reply-quote-name {
+  font-weight: 700;
+  color: var(--highlighter);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.reply-quote-mine .reply-quote-name {
+  color: #fff;
+}
+.reply-quote-text {
+  color: var(--paper-dim);
+  opacity: 0.9;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reply-quote-mine .reply-quote-text {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Typing bubble dots (inside message bubble) ─────────────────────── */
+@keyframes typing-bubble-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+.typing-bubble-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--highlighter);
+  display: inline-block;
+  animation: typing-bubble-dot 1.2s infinite ease-in-out;
+}
+.typing-bubble-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-bubble-dot:nth-child(3) { animation-delay: 0.3s; }
+@media (prefers-reduced-motion: reduce) {
+  .typing-bubble-dot { animation: none !important; }
+}
+
+/* ── Typing bubble container ────────────────────────────────────────── */
+.typing-bubble {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  background: var(--bg-4);
+  border: 2.5px solid var(--clr-dim);
+  border-radius: 14px 14px 14px 4px;
+}
+
+/* ── Composer focus state ───────────────────────────────────────────── */
+.composer-focused {
+  border-color: var(--highlighter) !important;
+}
+
+/* ── Composer wrapper & input ──────────────────────────────────────── */
+.composer-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.composer {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  min-width: 0;
+  background: var(--bg-4);
+  border-radius: 24px;
+  padding: 0 16px;
+  border: 2.5px solid var(--clr-dim);
+  transition: border-color 0.2s;
+}
+.composer:focus-within {
+  border-color: var(--highlighter);
+}
+.composer-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--paper);
+  font-family: var(--body);
+  height: 44px;
+}
+.composer-input::placeholder {
+  color: var(--paper-dim);
+}
+.composer-input:disabled {
+  opacity: 0.5;
+}
+
+/* ── Send button hover ──────────────────────────────────────────────── */
+.send-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: var(--highlighter);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.14s var(--ease-snap), background 0.15s;
+  flex-shrink: 0;
+}
+.send-btn:hover {
+  transform: scale(1.06);
+  background: var(--highlighter-dim);
+}
+.send-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Icon button (header actions, hover actions) ────────────────────── */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--paper-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.icon-btn:hover {
+  background: var(--ink-3);
+  color: var(--paper);
+}
+
+/* ── Chat header ────────────────────────────────────────────────────── */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 2.5px solid var(--clr-dim);
+  background: var(--bg-2);
+  min-height: 52px;
+  flex-shrink: 0;
+}
+.chat-back-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--paper-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.chat-back-btn:hover {
+  background: var(--ink-3);
+  color: var(--paper);
+}
+.chat-header-info {
+  flex: 1;
+  min-width: 0;
+}
+.chat-header-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--paper);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chat-header-status {
+  font-size: 12px;
+  color: var(--paper-dim);
+}
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Day divider with pseudo-element lines ──────────────────────────── */
+.day-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--paper-faint);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 18px 0;
+}
+.day-divider::before,
+.day-divider::after {
+  content: "";
+  flex: 1;
+  height: 2.5px;
+  background: var(--ink-3);
+}
+
+/* ── Conversation item active state ─────────────────────────────────── */
+.convo-active {
+  position: relative;
+  background: var(--bg-2);
+}
+.convo-active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--highlighter);
+}
+
+/* ── Avatar image loading & color cycling ───────────────────────────── */
+.avatar-img {
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+.avatar-img-loaded {
+  opacity: 1;
+}
+.avatar-color-0 { background-color: #6B7CFF; }
+.avatar-color-1 { background-color: #FF5C7D; }
+.avatar-color-2 { background-color: #3DE0A0; }
+.avatar-color-3 { background-color: #DFFF4F; color: #12132A; }
+.avatar-color-4 { background-color: #9B6BFF; }
+.avatar-color-5 { background-color: #FF9F43; }
+
+/* ── Connection pulse for disconnected state ────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.pulse-dot {
+  animation: pulse-dot 1s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot { animation: none !important; }
+}
+
+/* ── Toast mobile centering ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .toast-container {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
+    width: auto;
+    max-width: calc(100vw - 2rem);
+  }
+}

@@ -1,0 +1,77 @@
+name: Deploy Sharded Workers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/sharded-workers/**'
+  workflow_dispatch:
+
+env:
+  TOTAL_SHARDS: 7
+
+jobs:
+  generate-matrix:
+    name: Generate Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          MATRIX=$(python3 -c "import json; print(json.dumps(list(range(1, ${{ env.TOTAL_SHARDS }} + 1))))")
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+
+  deploy-shards:
+    name: Deploy Shard ${{ matrix.shard_index }}
+    runs-on: ubuntu-latest
+    needs: generate-matrix
+    strategy:
+      matrix:
+        shard_index: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Compute Account Index
+        id: account-index
+        run: |
+          echo "index=$(( ${{ matrix.shard_index }} + 1 ))" >> "$GITHUB_OUTPUT"
+          echo "database_id=${{ secrets[format('DATABASE_ID_{0}', matrix.shard_index)] }}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate wrangler config
+        working-directory: apps/sharded-workers
+        run: |
+          sed -i "s/shard-placeholder-db/shard-${{ matrix.shard_index }}-db/g" wrangler.jsonc
+          sed -i "s/\"placeholder\"/\"${{ steps.account-index.outputs.database_id }}\"/g" wrangler.jsonc
+          sed -i "s/shard-placeholder-id/${{ matrix.shard_index }}/g" wrangler.jsonc
+          sed -i "s/shard-placeholder-name/shard-${{ matrix.shard_index }}/g" wrangler.jsonc
+
+      - name: Apply D1 migrations
+        working-directory: apps/sharded-workers
+        run: npx wrangler d1 migrations apply "shard-${{ matrix.shard_index }}-db" --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets[format('CF_TK_{0}', steps.account-index.outputs.index)] }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets[format('CF_ACCOUNT_ID_{0}', steps.account-index.outputs.index)] }}
+
+      - name: Set Worker Secrets
+        working-directory: apps/sharded-workers
+        run: |
+          echo -n "${{ secrets.HMAC_SECRET }}" | npx wrangler secret put HMAC_SECRET --name shard-${{ matrix.shard_index }}
+          echo -n "${{ secrets.SHARD_CALLBACK_API_KEY }}" | npx wrangler secret put ACCOUNT1_CALLBACK_API_KEY --name shard-${{ matrix.shard_index }}
+          echo -n "${{ secrets[format('RD_API_{0}', matrix.shard_index)] }}" | npx wrangler secret put UPSTASH_REDIS_URL --name shard-${{ matrix.shard_index }}
+          echo -n "${{ secrets[format('RD_API_{0}_TOKEN', matrix.shard_index)] }}" | npx wrangler secret put UPSTASH_REDIS_TOKEN --name shard-${{ matrix.shard_index }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets[format('CF_TK_{0}', steps.account-index.outputs.index)] }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets[format('CF_ACCOUNT_ID_{0}', steps.account-index.outputs.index)] }}
+
+      - name: Deploy Shard Worker
+        working-directory: apps/sharded-workers
+        run: npx wrangler deploy --name shard-${{ matrix.shard_index }} --minify
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets[format('CF_TK_{0}', steps.account-index.outputs.index)] }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets[format('CF_ACCOUNT_ID_{0}', steps.account-index.outputs.index)] }}

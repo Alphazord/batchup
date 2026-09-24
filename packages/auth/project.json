@@ -1,0 +1,21 @@
+{
+  "name": "@repo/auth",
+  "sourceRoot": "packages/auth/src",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx vitest run --passWithNoTests",
+        "cwd": "packages/auth"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint src/",
+        "cwd": "packages/auth"
+      }
+    }
+  }
+}

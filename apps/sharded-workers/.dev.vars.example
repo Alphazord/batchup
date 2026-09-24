@@ -1,0 +1,39 @@
+# ─── Shard Identity ───────────────────────────────────────────────────────────
+# Unique ID for this shard (1-7). Set automatically by CI via sed replacement.
+# For local dev, set to 1 through 7 to test a specific shard.
+SHARD_ID=1
+
+# Human-readable name (matches worker name). Set automatically by CI via sed.
+SHARD_NAME=shard-1
+
+# Total number of shards. Set in wrangler.jsonc vars.
+TOTAL_SHARDS=7
+
+# ─── Auth ─────────────────────────────────────────────────────────────────────
+# HMAC secret for verifying bearer tokens signed by Account 1.
+# MUST be identical to Account 1's SESSION_SECRET in production.
+# Generate: openssl rand -base64 48
+HMAC_SECRET=your-hmac-secret-min-32-chars
+
+# Account 1 callback endpoint for syncing conversation metadata.
+# Set in wrangler.jsonc vars (same for all shards).
+ACCOUNT1_CALLBACK_URL=https://api.batchup.fun/api/internal/shard-callback
+
+# API key for authenticating shard→Account 1 callbacks.
+# MUST match Account 1's SHARD_CALLBACK_API_KEY in production.
+# Generate: openssl rand -base64 48
+ACCOUNT1_CALLBACK_API_KEY=your-shard-callback-api-key
+
+# ─── Upstash Redis (Rate Limiting) ───────────────────────────────────────────
+# REST URL and token from Upstash dashboard.
+# Each shard has its own Redis database for cross-shard rate limiting.
+UPSTASH_REDIS_URL=https://your-upstash-redis-url
+UPSTASH_REDIS_TOKEN=your-upstash-redis-token
+
+# ─── Circuit Breaker ─────────────────────────────────────────────────────────
+# Daily DO request budget per shard (90K = 90% of Cloudflare's 100K/day free tier).
+DAILY_DO_BUDGET=90000
+
+# Thresholds for circuit breaker state transitions (0.0 - 1.0).
+WARN_THRESHOLD=0.70
+DEGRADE_THRESHOLD=0.90

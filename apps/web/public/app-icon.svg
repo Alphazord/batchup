@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <!-- BatchUp primary app icon — Highlighter squircle + Ink mark.
+       Vector master: scales to any size with zero quality loss.
+       Rasterized PNGs (16–1024px) are provided alongside this file for
+       contexts that require a bitmap (favicons, store listings, manifests). -->
+  <rect width="40" height="40" rx="11" fill="#DFFF4F"/>
+  <path fill="#12132A" d="M10 16C10 13.79 11.79 12 14 12H22C25.31 12 28 14.69 28 18C28 20.4 26.61 22.47 24.6 23.45L28 27H22.5L20 24H14C11.79 24 10 22.21 10 20V16Z"/>
+  <path fill="#12132A" d="M17 27L21 21H26L22 27H17Z"/>
+</svg>

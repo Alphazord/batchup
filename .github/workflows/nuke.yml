@@ -1,0 +1,159 @@
+name: "!! NUKE ALL DATA"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "NUKE" to confirm — this deletes everything'
+        required: true
+        type: string
+
+env:
+  TOTAL_SHARDS: 7
+
+jobs:
+  # ── Account 1 D1 (single job, no matrix) ─────────────────────────
+  nuke-account1-d1:
+    name: Clear Account 1 D1
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Delete all rows (children first)
+        run: |
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM message_reactions" || true
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM messages" || true
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM conversation_members"
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM sessions"
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM orders"
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM accounts"
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM conversations"
+          npx wrangler d1 execute realtime-chat-app --remote --command "DELETE FROM users"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  # ── Shard D1s (matrix across 7 accounts) ─────────────────────────
+  generate-shard-config:
+    name: Generate Config
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    outputs:
+      matrix: ${{ steps.gen.outputs.matrix }}
+    steps:
+      - id: gen
+        run: |
+          python3 -c "
+          import json
+          shards = [{'shard': str(i), 'account': str(i + 1)} for i in range(1, ${{ env.TOTAL_SHARDS }} + 1)]
+          print('matrix=' + json.dumps(shards))
+          " >> "$GITHUB_OUTPUT"
+
+  nuke-shard-d1s:
+    name: Clear Shard ${{ matrix.cfg.shard }} D1
+    needs: generate-shard-config
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    strategy:
+      matrix:
+        cfg: ${{ fromJSON(needs.generate-shard-config.outputs.matrix) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Delete all rows
+        run: |
+          npx wrangler d1 execute "shard-${{ matrix.cfg.shard }}-db" --remote --command "DELETE FROM message_reactions" || true
+          npx wrangler d1 execute "shard-${{ matrix.cfg.shard }}-db" --remote --command "DELETE FROM messages" || true
+          npx wrangler d1 execute "shard-${{ matrix.cfg.shard }}-db" --remote --command "DELETE FROM conversation_members"
+          npx wrangler d1 execute "shard-${{ matrix.cfg.shard }}-db" --remote --command "DELETE FROM conversations"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets[format('CF_TK_{0}', matrix.cfg.account)] }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets[format('CF_ACCOUNT_ID_{0}', matrix.cfg.account)] }}
+
+  # ── Durable Objects ──────────────────────────────────────────────
+  nuke-account1-dos:
+    name: Delete Account 1 DOs
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Delete all ChatRoom DO instances
+        run: |
+          DO_IDS=$(npx wrangler durable-objects list --class ChatRoom --format json 2>/dev/null \
+            | python3 -c "import sys,json; [print(x['id']) for x in json.load(sys.stdin)]" || true)
+
+          if [ -z "$DO_IDS" ]; then
+            echo "No DO instances found."
+          else
+            for DO_ID in $DO_IDS; do
+              echo "Deleting DO $DO_ID..."
+              npx wrangler durable-objects delete "$DO_ID" --class ChatRoom --yes || true
+            done
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  nuke-shard-dos:
+    name: Delete Shard ${{ matrix.cfg.shard }} DOs
+    needs: generate-shard-config
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    strategy:
+      matrix:
+        cfg: ${{ fromJSON(needs.generate-shard-config.outputs.matrix) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Delete all ChatRoom DO instances
+        run: |
+          DO_IDS=$(npx wrangler durable-objects list --class ChatRoom --format json 2>/dev/null \
+            | python3 -c "import sys,json; [print(x['id']) for x in json.load(sys.stdin)]" || true)
+
+          if [ -z "$DO_IDS" ]; then
+            echo "No DO instances found."
+          else
+            for DO_ID in $DO_IDS; do
+              echo "Deleting DO $DO_ID..."
+              npx wrangler durable-objects delete "$DO_ID" --class ChatRoom --yes || true
+            done
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets[format('CF_TK_{0}', matrix.cfg.account)] }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets[format('CF_ACCOUNT_ID_{0}', matrix.cfg.account)] }}
+
+  # ── Summary ──────────────────────────────────────────────────────
+  summary:
+    name: Done
+    needs: [nuke-account1-d1, nuke-shard-d1s, nuke-account1-dos, nuke-shard-dos]
+    runs-on: ubuntu-latest
+    if: inputs.confirm == 'NUKE'
+    steps:
+      - run: |
+          echo "## Nuke Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Account 1 D1:** All 8 tables cleared (conversations, members, messages, reactions)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Shard D1s (×7):** All 4 tables cleared (conversations, members, messages, reactions)" >> $GITHUB_STEP_SUMMARY
+          echo "- **DOs:** All ChatRoom instances deleted on Account 1 + all shards" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Users will need to re-authenticate. All conversations and messages are gone." >> $GITHUB_STEP_SUMMARY

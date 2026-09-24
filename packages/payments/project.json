@@ -1,0 +1,21 @@
+{
+  "name": "@repo/payments",
+  "sourceRoot": "packages/payments/src",
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx vitest run --passWithNoTests",
+        "cwd": "packages/payments"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint src/",
+        "cwd": "packages/payments"
+      }
+    }
+  }
+}

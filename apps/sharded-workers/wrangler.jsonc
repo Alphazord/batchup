@@ -1,0 +1,52 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shard-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "vars": {
+    "TOTAL_SHARDS": "7",
+    "ACCOUNT1_CALLBACK_URL": "https://api.batchup.fun/api/internal/shard-callback",
+    "DAILY_DO_BUDGET": "90000",
+    "WARN_THRESHOLD": "0.70",
+    "DEGRADE_THRESHOLD": "0.90",
+    "SHARD_ID": "shard-placeholder-id",
+    "SHARD_NAME": "shard-placeholder-name"
+  },
+  "ratelimits": [
+    {
+      "name": "WS_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "shard-placeholder-db",
+      "database_id": "placeholder",
+      "migrations_dir": "drizzle",
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CHAT_ROOM",
+        "class_name": "ChatRoom",
+      },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ChatRoom"],
+    },
+  ],
+  "observability": {
+    "enabled": true,
+  },
+  "upload_source_maps": false,
+}
